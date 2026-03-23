@@ -1,0 +1,14 @@
+config.php
+.env
+.env.*
+!.env.example
+uploads/*
+!uploads/.gitkeep
+*.log
+*.tmp
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+node_modules/
+vendor/
