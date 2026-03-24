@@ -1,218 +1,332 @@
-﻿# ðŸ½ï¸ Smart Restaurant QR Ordering System
+﻿# RestroDesk - Restaurant QR Ordering System
 
-> **Part of the DevCore Portfolio Suite** â€” built on the [DevCore Shared Library](https://github.com/anshuman-dwibedi/devcore-shared)
+A complete QR code-based restaurant ordering system where customers scan QR codes at tables to order directly from their phones. Features live kitchen dashboard, real-time order tracking, table management, and admin analytics.
 
----
+Perfect for modern restaurants, cafes, and food courts looking to streamline ordering and payment processing.
 
-## ðŸ“¸ What It Looks Like
+Built on the DevCore Shared Library with secure payment handling and kitchen workflow optimization.
 
-**Customer Menu Page** â€” A clean dark-themed restaurant menu with category pills at the top (Starters, Mains, Desserts, Drinks). Menu items are displayed in a responsive grid of cards, each with a high-quality food photo, name, description and price. A sticky cart sidebar sits on the right (desktop) or a floating cart button on mobile. The top nav shows the table number detected from the QR code.
-
-**Checkout Page** â€” A step-progress bar (Menu â†’ Review â†’ Confirmed), a clear order summary card with items and prices, a special instructions field, and a prominent "Place Order" button.
-
-**Order Status Page** â€” A 4-step visual progress tracker (Received â†’ Preparing â†’ Ready â†’ Delivered) with animated icons, a live status card that updates in real time every 3 seconds, and a full order summary.
-
-**Admin Dashboard** â€” A dark sidebar layout with 4 KPI stat cards (Orders Today, Revenue, Avg Order Value, Active Tables), three Chart.js charts (line, bar, doughnut), and a live feed of recent orders with status badges.
-
-**Kitchen Orders View** â€” A card grid of all active orders, each showing the table, item list, elapsed time, and action buttons (Start Preparing / Mark Ready / Mark Delivered). Cards animate in when new orders arrive. A live pulsing indicator shows the feed is active.
-
-**QR Generator** â€” A grid of all 10 tables, each with its unique QR code image, the encoded URL, and Download + Preview buttons. A "Print All" button opens a print-optimised page.
+**Part of the DevCore Suite** â€” a collection of business-ready web applications sharing a common core library.
 
 ---
 
-## âœ¨ Features
+## Features
 
-- ðŸ“± **QR Code Per Table** â€” Each table gets a unique token URL; scanning opens the menu pre-tagged with the table number
-- âš¡ **Real-Time Order Updates** â€” Kitchen view and customer status page both poll `/api/live.php` every 3 seconds via `LivePoller`
-- ðŸ“Š **Analytics Dashboard** â€” KPIs, line/bar/doughnut charts, live order feed â€” all from one analytics API call
-- ðŸ›’ **Frictionless Cart** â€” Sticky sidebar on desktop, bottom-sheet modal on mobile, persisted in `sessionStorage`
-- ðŸ” **Session Auth** â€” Admin protected by `Auth::requireRole('admin')` on every page
-- âœ… **Server-Side Validation** â€” All inputs run through `Validator::make()` before any DB write
-- ðŸ’¬ **Toast Notifications** â€” Every user action (add to cart, status change, error) fires a `Toast` notification
-- ðŸ–¼ï¸ **Storage-Backed Image Uploads** â€” Drag-and-drop menu item photos directly in the admin; driver-switchable between Local, AWS S3, and Cloudflare R2 with a single config change
-- ðŸ–¨ï¸ **Print-Ready QR Page** â€” One click opens a print-optimised layout of all table QR codes
-- ðŸŽ¨ **DevCore Design System** â€” 100% `dc-*` CSS classes â€” no custom duplicate styles
-
----
-
-## ðŸ›  Tech Stack
-
-| Layer      | Technology                              |
-|------------|------------------------------------------|
-| Backend    | PHP 8.1+ (no framework)                  |
-| Database   | MySQL 8.0+                               |
-| Auth       | PHP sessions via `Auth` class            |
-| Storage    | DevCore `Storage` facade â€” Local / AWS S3 / Cloudflare R2 |
-| Frontend   | Vanilla JS + DevCore UI (devcore.js/css) |
-| Charts     | Chart.js 4.4 (via CDN)                   |
-| QR Codes   | qrserver.com API (free, no key needed)   |
-| Design     | DevCore CSS design system                |
+| Feature | Description |
+|---------|-------------|
+| QR Table Menu | Each restaurant table has unique QR code linking to its menu |
+| Mobile Ordering | Customers scan QR, browse menu, customize items, place order from phone |
+| Live Menu Display | Kitchen displays live incoming orders with status (received, preparing, ready, served) |
+| Menu Categories | Organize menu items by appetizers, mains, sides, drinks, desserts, etc. |
+| Item Customization | Customers can customize items (spicy level, preferences, special requests) |
+| Order Tracking | Customers track order status in real-time (received â†’ preparing â†’ ready â†’ served) |
+| Table Management | Admin manages table status (vacant, occupied, cleaning, reserved) |
+| Order History | Admin views all orders with timeline, customer details, amounts |
+| Analytics Dashboard | Daily revenue, item popularity, orders by hour, table occupancy trends |
+| Kitchen Workflow | Kitchen staff see orders in real-time, mark items as ready, coordinate with servers |
 
 ---
 
-## ðŸš€ Setup Instructions
+## Tech Stack
 
-### 1. Clone / Copy the project
+| Layer | Technology |
+|-------|-----------|
+| Backend | PHP 8.1+ with DevCore framework |
+| Database | MySQL 8 / MariaDB 10.6+ |
+| Frontend | Vanilla JavaScript ES2022 + DevCore UI library |
+| Charts | Chart.js via DevCore wrapper |
+| QR Codes | qrserver.com API for table codes |
+| Image Storage | Local filesystem for menu item images |
+| Real-Time | Client-side polling for order updates |
+| Shared Core | DevCore Shared Library (git submodule at ./core/) |
 
-Place the project folder so it lives **alongside** the `core/` shared library:
+---
+
+## Project Structure
 
 ```
-devcore/
-â”œâ”€â”€ core/               â† shared library (from devcore-shared-library.zip)
-â”‚   â”œâ”€â”€ bootstrap.php
-â”‚   â”œâ”€â”€ backend/
-â”‚   â””â”€â”€ ui/
-â”œâ”€â”€ config.php          â† your config (copy from config.example.php)
-â””â”€â”€ restrodesk/   â† this project
-    â”œâ”€â”€ index.php
-    â”œâ”€â”€ admin/
-    â”œâ”€â”€ api/
-    â””â”€â”€ ...
+restrodesk/
+â”œâ”€â”€ index.php                   Customer menu (accessed via table QR)
+â”œâ”€â”€ checkout.php                Customer order confirmation + payment
+â”œâ”€â”€ order-status.php            Customer order tracking page
+â”œâ”€â”€ order-confirmation.php      Post-order summary
+â”œâ”€â”€ config.example.php          Configuration template
+â”œâ”€â”€ database.sql                Schema + sample menu items
+â”œâ”€â”€ .env.example                Environment variables
+â”‚
+â”œâ”€â”€ api/
+â”‚   â”œâ”€â”€ menu.php                GET menu items (public, by table)
+â”‚   â”œâ”€â”€ menu-admin.php          POST create, PUT update, DELETE menu items (admin)
+â”‚   â”œâ”€â”€ orders.php              POST place, GET list/view, PUT change status
+â”‚   â”œâ”€â”€ tables-list.php         GET all tables with occupancy (admin)
+â”‚   â”œâ”€â”€ live.php                GET real-time orders for kitchen (polling)
+â”‚   â””â”€â”€ analytics.php           GET dashboard stats (admin only)
+â”‚
+â”œâ”€â”€ admin/
+â”‚   â”œâ”€â”€ login.php               Staff authentication
+â”‚   â”œâ”€â”€ dashboard.php           Analytics + live order feed
+â”‚   â”œâ”€â”€ menu.php                Menu management (add/edit/delete items + images)
+â”‚   â”œâ”€â”€ orders.php              Order management + kitchen view
+â”‚   â”œâ”€â”€ qr-generator.php        Generate printable QR codes for tables
+â”‚   â””â”€â”€ logout.php              Session logout
+â”‚
+â””â”€â”€ core/                       DevCore shared library (git submodule)
+    â”œâ”€â”€ bootstrap.php           Autoloader + config loader
+    â”œâ”€â”€ backend/                PHP classes (Database, Api, Auth, etc.)
+    â””â”€â”€ ui/                     CSS framework + JavaScript utilities
 ```
 
-### 2. Create `config.php`
+---
 
-Copy `config.example.php` to `devcore/config.php` and fill in your database credentials:
+## Setup Instructions
+
+### 1. Clone DevCore Shared Library
+
+```bash
+git clone https://github.com/anshuman-dwibedi/devcore-shared.git core
+```
+
+Or using submodule:
+```bash
+git clone --recursive https://github.com/anshuman-dwibedi/restrodesk.git
+```
+
+### 2. Create Database
+
+```bash
+mysql -u root -p -e "CREATE DATABASE restaurant_qr CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+mysql -u root -p restaurant_qr < database.sql
+```
+
+Database includes sample menu items and table configurations.
+
+### 3. Configure Application
+
+```bash
+cp config.example.php config.php
+```
+
+Edit `config.php`:
 
 ```php
 return [
     'db_host'    => 'localhost',
     'db_name'    => 'restaurant_qr',
     'db_user'    => 'root',
-    'db_pass'    => '',
-    'app_name'   => 'Restrodesk',
-    'app_url'    => 'http://localhost',
-    'debug'      => true,
-    'api_secret' => 'your-secret-here',
+    'db_pass'    => 'your_password',
+    'app_name'   => 'RestroDesk',
+    'app_url'    => 'http://localhost/restrodesk',
+    'debug'      => true,  // set false in production
+    'api_secret' => 'your-secure-random-string',
 ];
 ```
 
-### 3. Configure Storage for image uploads
+### 4. Start Web Server
 
-Copy `restrodesk/config.example.php` to `devcore/config.php` (or add the `storage` block to your existing config). The default `local` driver works with no extra setup:
-
-```php
-'storage' => [
-    'driver' => 'local',   // 'local' | 's3' | 'r2'
-    'local'  => [
-        'root'     => __DIR__ . '/uploads',
-        'base_url' => 'http://localhost/uploads',
-    ],
-],
-```
-
-**To switch to S3:** set `driver => 's3'` and fill in `key`, `secret`, `bucket`, `region`.  
-**To switch to R2:** set `driver => 'r2'` and fill in `account_id`, `key`, `secret`, `bucket`, `base_url`.  
-See `config.example.php` for the full reference with inline comments.
-
-### 4. Create the database and import SQL
-
+Using PHP built-in server:
 ```bash
-mysql -u root -p -e "CREATE DATABASE restaurant_qr CHARACTER SET utf8mb4;"
-mysql -u root -p restaurant_qr < restrodesk/database.sql
-```
-
-### 5. Start a PHP server (dev)
-
-```bash
-cd devcore
 php -S localhost:8000
 ```
 
-### 6. Open in your browser
+Or configure Apache/Nginx to point to project root.
 
-| URL | Description |
-|-----|-------------|
-| `http://localhost:8000/restrodesk/` | Customer menu (walk-in) |
-| `http://localhost:8000/restrodesk/index.php?table=1` | Customer menu for Table 1 |
-| `http://localhost:8000/restrodesk/admin/login.php` | Admin login |
+### 5. Access Application
 
-**Admin credentials:**
-- Email: `admin@restaurant.com`
-- Password: `admin123`
+- **Customer Menu (scan QR):** http://localhost:8000/restrodesk/index.php?token=TABLE_01
+- **Admin Dashboard:** http://localhost:8000/restrodesk/admin/login.php
+
+**Default Admin Credentials:**
+```
+Email: admin@restaurant.com
+Password: admin123
+```
+
+> Change immediately in production.
+
+### 6. Print QR Codes for Tables
+
+1. Admin â†’ QR Generator
+2. Click "Print All QR Codes"
+3. Print on sticker paper and place on each table
 
 ---
 
-## ðŸ“± How the QR System Works
+## Configuration
 
-1. **Admin visits** `admin/qr-generator.php` â€” sees a QR code for every table
-2. **Each QR code encodes** a unique URL like:
-   `http://yoursite.com/restrodesk/index.php?token=tok_t5_e7j3f6g8i9d4`
-3. **Admin prints and places** the QR codes on the physical tables
-4. **Customer scans** the QR with their phone camera
-5. **Browser opens** `index.php?token=tok_t5_...` â€” the PHP resolves the token to `Table 5`
-6. **Menu loads** with "Table 5" displayed in the nav badge
-7. **Customer adds items** â€” table number is silently carried through the cart
-8. **On checkout**, the order is submitted with `table_id: 5` automatically
-9. **Kitchen sees** Table 5 on the orders screen instantly via live polling
+### config.example.php
 
----
+Database credentials, app URL, and other settings.
 
-## âš¡ How Real-Time Works
+Sample menu items in database:
+- Starters (appetizers)
+- Main courses
+- Sides (rice, bread, vegetables)
+- Beverages (soft drinks, tea, coffee)
+- Desserts
 
-The system uses **short-interval HTTP polling** â€” a simple, robust approach with no WebSocket infrastructure required.
-
-### Kitchen Orders (`admin/orders.php`)
-```javascript
-const poller = new LivePoller('../api/live.php', (res) => {
-    renderOrders(res.data.active_orders);
-    updateCounts(res.data.counts);
-}, 3000);
-poller.start();
-```
-Every 3 seconds, `LivePoller` (from `devcore.js`) calls `GET /api/live.php`, which queries the database for all active orders. New order cards animate in with `dc-animate-fade-up` and a toast notification fires.
-
-### Customer Status Page (`order-status.php`)
-```javascript
-const poller = new LivePoller(
-    `api/live.php?order_id=${ORDER_ID}`,
-    handlePoll,
-    3000
-);
-```
-The customer's page polls for their specific order. When the status changes (e.g., `pending` â†’ `preparing`), the progress tracker updates and a toast notification fires. Polling stops automatically when status reaches `delivered`.
+Sample tables: 10 tables (Table 1 through Table 10)
 
 ---
 
-## ðŸ“ Project Structure
+## How It Works
+
+### Customer Ordering Flow
+
+1. Customer arrives at restaurant table
+2. Scans QR code sticker on table via phone camera
+3. Lands on `/index.php?token=TABLE_01`
+4. Browses menu items grouped by category
+5. Taps item to see details and customization options:
+   - Spice level (mild, medium, hot)
+   - Substitutions / special requests
+   - Quantity
+6. Adds to order
+7. Reviews order summary on cart page
+8. Proceeds to checkout
+9. Provides name and phone number (payment optional in basic setup)
+10. Submits order â†’ order kitchen gets notified
+
+### Kitchen Display System
+
+Kitchen staff terminal shows:
 
 ```
-restrodesk/
-â”œâ”€â”€ index.php              Customer menu â€” QR landing page
-â”œâ”€â”€ checkout.php           Order review & confirmation
-â”œâ”€â”€ order-status.php       Live order tracking for customer
-â”œâ”€â”€ admin/
-â”‚   â”œâ”€â”€ login.php          Admin authentication
-â”‚   â”œâ”€â”€ dashboard.php      KPIs + charts + live feed
-â”‚   â”œâ”€â”€ orders.php         Kitchen view â€” live order management
-â”‚   â”œâ”€â”€ menu.php           Menu item CRUD (add/edit/delete)
-â”‚   â”œâ”€â”€ qr-generator.php   QR code generation + print
-â”‚   â””â”€â”€ logout.php
-â”œâ”€â”€ api/
-â”‚   â”œâ”€â”€ menu.php           GET menu (public)
-â”‚   â”œâ”€â”€ menu-admin.php     POST/PUT/DELETE menu items (admin)
-â”‚   â”œâ”€â”€ orders.php         POST create / GET list / PUT status
-â”‚   â”œâ”€â”€ analytics.php      GET dashboard stats (admin)
-â”‚   â””â”€â”€ live.php           GET real-time polling endpoint
-â”œâ”€â”€ database.sql           Full schema + sample data
-â””â”€â”€ README.md
+ORDER #1: Table 5
+  - Biryani x2 (extra spicy)
+  - Naan x2 (butter)
+  - Raita x1
+
+Status: RECEIVED â†’ [Mark as Cooking] â†’ COOKING â†’ [Mark as Ready] â†’ READY
 ```
+
+Real-time updates every 3 seconds via `/api/live.php`. Kitchen staff:
+1. See new orders as they come in
+2. Mark items as "Cooking" (communicate start to kitchen)
+3. Mark items as "Ready" (server will pick up)
+4. System notifies customer order is ready
+
+### Order Tracking (Customer View)
+
+Customer can view order status on their phone via order tracking page:
+
+```
+Your Order #1234
+â”œâ”€ Status: Received â†’ Cooking â†’ Ready â† (You are here)
+â”œâ”€ Estimated Time: 15 minutes
+â”œâ”€ Items: Biryani (2), Naan (2), Raita (1)
+â””â”€ [Print Receipt] [Pay Now (if enabled)]
+```
+
+Updates every 3 seconds via polling.
+
+### Table Management
+
+Admin can manage table status:
+- **Vacant** â€” empty, ready for customers
+- **Occupied** â€” customer is seated
+- **Cleaning** â€” staff cleaning table
+- **Reserved** â€” reserved for walk-in
+
+QR Generator shows which tables are vacant vs occupied, helps staff manage seating chart.
+
+### Analytics
+
+Dashboard shows:
+- Daily revenue (real-time)
+- Orders placed today / this month
+- Average order value
+- Popular menu items (bar chart)
+- Orders by hour (line chart)
+- Table utilization (occupied vs vacant)
+- Peak hours analysis
 
 ---
 
-## ðŸ”— DevCore Shared Library
+## API Endpoints
 
-This project is built on the **DevCore Shared Library**, providing:
+| Method | Endpoint | Auth | Description |
+|--------|----------|------|-------------|
+| GET | /api/menu.php?token=TABLE_01 | No | Get menu items for table (public) |
+| POST | /api/menu-admin.php | Admin | Create menu item with image |
+| PUT | /api/menu-admin.php?id=X | Admin | Update menu item |
+| DELETE | /api/menu-admin.php?id=X | Admin | Delete menu item and image |
+| POST | /api/orders.php | No | Create new order from customer |
+| GET | /api/orders.php | Admin | List all orders with filters |
+| GET | /api/orders.php?id=X | No/Admin | Get order details (public via token, admin via session) |
+| PUT | /api/orders.php?id=X | Admin | Update order status (received, cooking, ready, served, canceled) |
+| GET | /api/tables-list.php | Admin | Get all tables and occupancy status |
+| GET | /api/live.php | No/Admin | Real-time orders for kitchen display (unfiltered) or customer tracking (by token) |
+| GET | /api/analytics.php | Admin | Dashboard statistics and charts |
 
-- `Database` â€” singleton PDO wrapper
-- `Api` â€” standardised JSON response helper
-- `Auth` â€” session-based authentication
-- `Analytics` â€” reusable query helpers
-- `QrCode` â€” QR code URL generator
-- `Validator` â€” input validation
-- `Storage` â€” driver-switchable file storage facade (Local / S3 / R2)
-- `devcore.css` â€” full dark-mode design system
-- `devcore.js` â€” Toast, Modal, LivePoller, DCChart, DC.get/post
+---
 
-> **Part of the DevCore Portfolio Suite** â€” a collection of production-ready PHP projects sharing a common core library.
+## Troubleshooting
+
+**Database not found**
+- Create: `mysql -u root -p -e "CREATE DATABASE restaurant_qr;"`
+- Import: `mysql -u root -p restaurant_qr < database.sql`
+- Verify database name in config.php
+
+**"Cannot include core/bootstrap.php"**
+- Clone: `git clone https://github.com/anshuman-dwibedi/devcore-shared.git core`
+- Or: `git submodule update --init`
+
+**QR codes not scanning**
+- QR codes generated via qrserver.com API (requires internet)
+- Verify URL in QR code is accessible: http://localhost:8000/restrodesk/index.php?token=TABLE_01
+- Test: Scan generated QR and check if it opens menu
+
+**Kitchen orders not updating live**
+- Check browser console for JS errors
+- Verify `/api/live.php` returns JSON with current orders
+- Polling default interval: 3 seconds (configurable)
+
+**Menu items not showing for customer**
+- Verify items in database: `SELECT COUNT(*) FROM menu_items;`
+- Check items are marked active: `SELECT COUNT(*) FROM menu_items WHERE active = 1;`
+- Verify table token is valid in URL: `SELECT token FROM tables;`
+
+**Admin login not working**
+- Verify users table: `SELECT COUNT(*) FROM users;`
+- Check session handling in php.ini
+- Reset password via database if needed
+
+**Images not uploading**
+- Create uploads folder: `mkdir -p uploads && chmod 755 uploads`
+- Verify folder is writable: `touch uploads/test && rm uploads/test`
+
+**Order status not changing**
+- Verify `/api/orders.php` PUT endpoint is accessible
+- Check admin permissions in database: `SELECT role FROM users WHERE email = 'admin@restaurant.com';`
+
+---
+
+## Environment Variables
+
+Create `.env` or configure in config.php:
+
+| Variable | Purpose |
+|----------|---------|
+| DB_HOST | MySQL hostname |
+| DB_NAME | Database name |
+| DB_USER | Database username |
+| DB_PASS | Database password |
+| APP_NAME | Restaurant name in UI |
+| APP_URL | Public base URL for customer QR links |
+| DEBUG | Debug mode (true/false) |
+| API_SECRET | API bearer token secret |
+| KITCHEN_POLLING_INTERVAL | Kitchen display refresh interval (milliseconds, default: 3000) |
+| CUSTOMER_POLLING_INTERVAL | Customer order tracking refresh interval (default: 3000) |
+| ORDER_READY_NOTIFICATION | Enable SMS/notification when order ready (true/false) |
+| PAYMENT_ENABLED | Enable payment collection (true/false, default: false) |
+
+---
+
+## License
+
+MIT License â€” see LICENSE file.
+
+---
+
+**Questions?** Visit [DevCore Shared Library](https://github.com/anshuman-dwibedi/devcore-shared) repository.
 
