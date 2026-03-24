@@ -1,4 +1,4 @@
-﻿# RestroDesk - Restaurant QR Ordering System
+# RestroDesk - Restaurant QR Ordering System
 
 A complete QR code-based restaurant ordering system where customers scan QR codes at tables to order directly from their phones. Features live kitchen dashboard, real-time order tracking, table management, and admin analytics.
 
@@ -6,7 +6,7 @@ Perfect for modern restaurants, cafes, and food courts looking to streamline ord
 
 Built on the DevCore Shared Library with secure payment handling and kitchen workflow optimization.
 
-**Part of the DevCore Suite** â€” a collection of business-ready web applications sharing a common core library.
+**Part of the DevCore Suite** — a collection of business-ready web applications sharing a common core library.
 
 ---
 
@@ -19,7 +19,7 @@ Built on the DevCore Shared Library with secure payment handling and kitchen wor
 | Live Menu Display | Kitchen displays live incoming orders with status (received, preparing, ready, served) |
 | Menu Categories | Organize menu items by appetizers, mains, sides, drinks, desserts, etc. |
 | Item Customization | Customers can customize items (spicy level, preferences, special requests) |
-| Order Tracking | Customers track order status in real-time (received â†’ preparing â†’ ready â†’ served) |
+| Order Tracking | Customers track order status in real-time (received → preparing → ready → served) |
 | Table Management | Admin manages table status (vacant, occupied, cleaning, reserved) |
 | Order History | Admin views all orders with timeline, customer details, amounts |
 | Analytics Dashboard | Daily revenue, item popularity, orders by hour, table occupancy trends |
@@ -46,34 +46,34 @@ Built on the DevCore Shared Library with secure payment handling and kitchen wor
 
 ```
 restrodesk/
-â”œâ”€â”€ index.php                   Customer menu (accessed via table QR)
-â”œâ”€â”€ checkout.php                Customer order confirmation + payment
-â”œâ”€â”€ order-status.php            Customer order tracking page
-â”œâ”€â”€ order-confirmation.php      Post-order summary
-â”œâ”€â”€ config.example.php          Configuration template
-â”œâ”€â”€ database.sql                Schema + sample menu items
-â”œâ”€â”€ .env.example                Environment variables
-â”‚
-â”œâ”€â”€ api/
-â”‚   â”œâ”€â”€ menu.php                GET menu items (public, by table)
-â”‚   â”œâ”€â”€ menu-admin.php          POST create, PUT update, DELETE menu items (admin)
-â”‚   â”œâ”€â”€ orders.php              POST place, GET list/view, PUT change status
-â”‚   â”œâ”€â”€ tables-list.php         GET all tables with occupancy (admin)
-â”‚   â”œâ”€â”€ live.php                GET real-time orders for kitchen (polling)
-â”‚   â””â”€â”€ analytics.php           GET dashboard stats (admin only)
-â”‚
-â”œâ”€â”€ admin/
-â”‚   â”œâ”€â”€ login.php               Staff authentication
-â”‚   â”œâ”€â”€ dashboard.php           Analytics + live order feed
-â”‚   â”œâ”€â”€ menu.php                Menu management (add/edit/delete items + images)
-â”‚   â”œâ”€â”€ orders.php              Order management + kitchen view
-â”‚   â”œâ”€â”€ qr-generator.php        Generate printable QR codes for tables
-â”‚   â””â”€â”€ logout.php              Session logout
-â”‚
-â””â”€â”€ core/                       DevCore shared library (git submodule)
-    â”œâ”€â”€ bootstrap.php           Autoloader + config loader
-    â”œâ”€â”€ backend/                PHP classes (Database, Api, Auth, etc.)
-    â””â”€â”€ ui/                     CSS framework + JavaScript utilities
+├── index.php                   Customer menu (accessed via table QR)
+├── checkout.php                Customer order confirmation + payment
+├── order-status.php            Customer order tracking page
+├── order-confirmation.php      Post-order summary
+├── config.example.php          Configuration template
+├── database.sql                Schema + sample menu items
+├── .env.example                Environment variables
+│
+├── api/
+│   ├── menu.php                GET menu items (public, by table)
+│   ├── menu-admin.php          POST create, PUT update, DELETE menu items (admin)
+│   ├── orders.php              POST place, GET list/view, PUT change status
+│   ├── tables-list.php         GET all tables with occupancy (admin)
+│   ├── live.php                GET real-time orders for kitchen (polling)
+│   └── analytics.php           GET dashboard stats (admin only)
+│
+├── admin/
+│   ├── login.php               Staff authentication
+│   ├── dashboard.php           Analytics + live order feed
+│   ├── menu.php                Menu management (add/edit/delete items + images)
+│   ├── orders.php              Order management + kitchen view
+│   ├── qr-generator.php        Generate printable QR codes for tables
+│   └── logout.php              Session logout
+│
+└── core/                       DevCore shared library (git submodule)
+    ├── bootstrap.php           Autoloader + config loader
+    ├── backend/                PHP classes (Database, Api, Auth, etc.)
+    └── ui/                     CSS framework + JavaScript utilities
 ```
 
 ---
@@ -145,7 +145,7 @@ Password: admin123
 
 ### 6. Print QR Codes for Tables
 
-1. Admin â†’ QR Generator
+1. Admin → QR Generator
 2. Click "Print All QR Codes"
 3. Print on sticker paper and place on each table
 
@@ -184,7 +184,7 @@ Sample tables: 10 tables (Table 1 through Table 10)
 7. Reviews order summary on cart page
 8. Proceeds to checkout
 9. Provides name and phone number (payment optional in basic setup)
-10. Submits order â†’ order kitchen gets notified
+10. Submits order → order kitchen gets notified
 
 ### Kitchen Display System
 
@@ -196,7 +196,7 @@ ORDER #1: Table 5
   - Naan x2 (butter)
   - Raita x1
 
-Status: RECEIVED â†’ [Mark as Cooking] â†’ COOKING â†’ [Mark as Ready] â†’ READY
+Status: RECEIVED → [Mark as Cooking] → COOKING → [Mark as Ready] → READY
 ```
 
 Real-time updates every 3 seconds via `/api/live.php`. Kitchen staff:
@@ -211,10 +211,10 @@ Customer can view order status on their phone via order tracking page:
 
 ```
 Your Order #1234
-â”œâ”€ Status: Received â†’ Cooking â†’ Ready â† (You are here)
-â”œâ”€ Estimated Time: 15 minutes
-â”œâ”€ Items: Biryani (2), Naan (2), Raita (1)
-â””â”€ [Print Receipt] [Pay Now (if enabled)]
+├─ Status: Received → Cooking → Ready ← (You are here)
+├─ Estimated Time: 15 minutes
+├─ Items: Biryani (2), Naan (2), Raita (1)
+└─ [Print Receipt] [Pay Now (if enabled)]
 ```
 
 Updates every 3 seconds via polling.
@@ -222,10 +222,10 @@ Updates every 3 seconds via polling.
 ### Table Management
 
 Admin can manage table status:
-- **Vacant** â€” empty, ready for customers
-- **Occupied** â€” customer is seated
-- **Cleaning** â€” staff cleaning table
-- **Reserved** â€” reserved for walk-in
+- **Vacant** — empty, ready for customers
+- **Occupied** — customer is seated
+- **Cleaning** — staff cleaning table
+- **Reserved** — reserved for walk-in
 
 QR Generator shows which tables are vacant vs occupied, helps staff manage seating chart.
 
@@ -324,9 +324,8 @@ Create `.env` or configure in config.php:
 
 ## License
 
-MIT License â€” see LICENSE file.
+MIT License — see LICENSE file.
 
 ---
 
 **Questions?** Visit [DevCore Shared Library](https://github.com/anshuman-dwibedi/devcore-shared) repository.
-
