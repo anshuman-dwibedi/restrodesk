@@ -18,7 +18,7 @@
  * All require admin session.
  */
 require_once dirname(__DIR__) . '/core/bootstrap.php';
-Auth::requireRole('admin', '/restaurant-qr-ordering/admin/login.php');
+Auth::requireRole('admin', '/admin/login.php');
 
 $db     = Database::getInstance();
 
