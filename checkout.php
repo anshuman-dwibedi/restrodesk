@@ -4,7 +4,7 @@
  * Cart data comes from sessionStorage (JS) via a hidden form POST
  * or from the ?data= URL param (fallback for direct links)
  */
-require_once dirname(__DIR__, 2) . '/core/bootstrap.php';
+require_once __DIR__ . '/core/bootstrap.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">

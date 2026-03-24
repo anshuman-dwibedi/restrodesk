@@ -1,5 +1,5 @@
 <?php
-require_once dirname(__DIR__, 3) . '/core/bootstrap.php';
+require_once dirname(__DIR__) . '/core/bootstrap.php';
 $db = Database::getInstance();
 $tables = $db->fetchAll('SELECT id, name FROM `tables` ORDER BY id');
 	$active = $db->fetchAll(

@@ -1,5 +1,5 @@
 <?php
-require_once dirname(__DIR__, 3) . '/core/bootstrap.php';
+require_once dirname(__DIR__) . '/core/bootstrap.php';
 
 // Already logged in?
 if (Auth::check() && Auth::role() === 'admin') {

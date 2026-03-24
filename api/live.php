@@ -6,7 +6,7 @@
  * ?order_id=X   → single order status (for customer order-status page)
  * (no param)    → kitchen overview: active order count + recent orders
  */
-require_once dirname(__DIR__, 3) . '/core/bootstrap.php';
+require_once dirname(__DIR__) . '/core/bootstrap.php';
 
 $db = Database::getInstance();
 

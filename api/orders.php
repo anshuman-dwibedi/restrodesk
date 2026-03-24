@@ -5,7 +5,7 @@
  * GET    — list orders       (admin, requires session)
  * PUT    — update status     (admin, requires session)
  */
-require_once dirname(__DIR__, 3) . '/core/bootstrap.php';
+require_once dirname(__DIR__) . '/core/bootstrap.php';
 
 $db     = Database::getInstance();
 $method = $_SERVER['REQUEST_METHOD'];

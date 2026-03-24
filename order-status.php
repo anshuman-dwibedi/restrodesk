@@ -4,7 +4,7 @@
  * Polls /api/live.php?order_id=X every 3 seconds via LivePoller
  * Supports ?token= or ?order_id= lookup
  */
-require_once dirname(__DIR__, 2) . '/core/bootstrap.php';
+require_once __DIR__ . '/core/bootstrap.php';
 
 $db         = Database::getInstance();
 $orderId    = isset($_GET['order_id']) ? (int)$_GET['order_id'] : 0;

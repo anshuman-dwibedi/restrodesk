@@ -7,7 +7,7 @@
  * FIX: removed PHP call to renderCartHtml() (PHP0417).
  *      Cart sidebar is now rendered entirely by JavaScript.
  */
-require_once dirname(__DIR__, 2) . '/core/bootstrap.php';
+require_once __DIR__ . '/core/bootstrap.php';
 
 $db = Database::getInstance();
 

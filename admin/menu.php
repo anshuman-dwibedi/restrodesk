@@ -1,5 +1,5 @@
 <?php
-require_once dirname(__DIR__, 3) . '/core/bootstrap.php';
+require_once dirname(__DIR__) . '/core/bootstrap.php';
 Auth::requireRole('admin', '/restaurant-qr-ordering/admin/login.php');
 
 $db         = Database::getInstance();

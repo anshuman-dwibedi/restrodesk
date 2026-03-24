@@ -4,7 +4,7 @@
  * Returns all KPI and chart data for the admin dashboard
  * Requires admin session
  */
-require_once dirname(__DIR__, 3) . '/core/bootstrap.php';
+require_once dirname(__DIR__) . '/core/bootstrap.php';
 
 Auth::requireRole('admin', '/admin/login.php');
 

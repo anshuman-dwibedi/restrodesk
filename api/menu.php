@@ -4,7 +4,7 @@
  * Returns all available menu items grouped by category
  * Also validates the table token if provided
  */
-require_once dirname(__DIR__, 3) . '/core/bootstrap.php';
+require_once dirname(__DIR__) . '/core/bootstrap.php';
 
 $db = Database::getInstance();
 
