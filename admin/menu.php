@@ -1,6 +1,6 @@
 <?php
 require_once dirname(__DIR__) . '/core/bootstrap.php';
-Auth::requireRole('admin', '/admin/login.php');
+Auth::requireRole('admin', '/restaurant-qr-ordering/admin/login.php');
 
 $db         = Database::getInstance();
 $categories = $db->fetchAll('SELECT id, name FROM categories ORDER BY sort_order');
