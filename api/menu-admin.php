@@ -166,7 +166,7 @@ function resolveImage(?string $existingUrl): ?string
 function tryDeleteStoredImage(string $imageUrl): void
 {
     try {
-        $config  = require dirname(__DIR__, 2) . '/config.php';
+        $config  = devcore_config();
         $driver  = $config['storage']['driver'] ?? 'local';
         $baseUrl = match ($driver) {
             'local' => rtrim($config['storage']['local']['base_url'] ?? '', '/'),

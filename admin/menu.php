@@ -11,7 +11,8 @@ $items      = $db->fetchAll(
      ORDER BY m.category_id, m.name'
 );
 
-$storageDriver = ucfirst((require dirname(__DIR__, 3) . '/config.php')['storage']['driver'] ?? 'local');
+$config = devcore_config();
+$storageDriver = ucfirst($config['storage']['driver'] ?? 'local');
 
 // ── Helper: render the reusable image picker widget ────────────
 function imagePicker(string $prefix): string {
