@@ -1,6 +1,6 @@
 <?php
 require_once dirname(__DIR__) . '/core/bootstrap.php';
-Auth::requireRole('admin', '/restaurant-qr-ordering/admin/login.php');
+Auth::requireRole('admin', 'login.php');
 
 $db     = Database::getInstance();
 $tables = $db->fetchAll('SELECT id, name, qr_token FROM `tables` ORDER BY id');
@@ -8,7 +8,9 @@ $tables = $db->fetchAll('SELECT id, name, qr_token FROM `tables` ORDER BY id');
 // Build the base URL dynamically
 $baseUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http')
          . '://' . $_SERVER['HTTP_HOST'];
-$menuBase = $baseUrl . '/restaurant-qr-ordering/index.php?token=';
+$scriptDir = str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'] ?? '/admin/qr-generator.php'));
+$appBase = rtrim(dirname($scriptDir), '/');
+$menuBase = $baseUrl . $appBase . '/index.php?token=';
 ?>
 <!DOCTYPE html>
 <html lang="en">

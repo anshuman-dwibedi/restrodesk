@@ -1,6 +1,6 @@
 <?php
 require_once dirname(__DIR__) . '/core/bootstrap.php';
-Auth::requireRole('admin', '/restaurant-qr-ordering/admin/login.php');
+Auth::requireRole('admin', 'login.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
