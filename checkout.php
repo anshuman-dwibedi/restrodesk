@@ -5,6 +5,9 @@
  * or from the ?data= URL param (fallback for direct links)
  */
 require_once __DIR__ . '/core/bootstrap.php';
+
+$scriptDir = str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'] ?? '/checkout.php'));
+$assetBase = rtrim($scriptDir, '/');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,8 +17,8 @@ require_once __DIR__ . '/core/bootstrap.php';
     <title>Checkout — Restrodesk</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/devcore-suite/core/ui/devcore.css">
-    <link rel="stylesheet" href="/devcore-suite/core/ui/parts/_icons.css">
+    <link rel="stylesheet" href="<?= htmlspecialchars($assetBase . '/core/ui/devcore.css', ENT_QUOTES, 'UTF-8') ?>">
+    <link rel="stylesheet" href="<?= htmlspecialchars($assetBase . '/core/ui/parts/_icons.css', ENT_QUOTES, 'UTF-8') ?>">
     <style>
         :root { --dc-accent:#e8a838; --dc-accent-2:#f0c060; --dc-accent-glow:rgba(232,168,56,0.2); }
 
@@ -79,8 +82,8 @@ require_once __DIR__ . '/core/bootstrap.php';
     </div>
 </div>
 
-<script src="/devcore-suite/core/ui/devcore.js"></script>
-<script src="/devcore-suite/core/utils/helpers.js"></script>
+<script src="<?= htmlspecialchars($assetBase . '/core/ui/devcore.js', ENT_QUOTES, 'UTF-8') ?>"></script>
+<script src="<?= htmlspecialchars($assetBase . '/core/utils/helpers.js', ENT_QUOTES, 'UTF-8') ?>"></script>
 <script>
 let cartData = null;
 

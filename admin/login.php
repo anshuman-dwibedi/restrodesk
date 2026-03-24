@@ -1,6 +1,9 @@
 <?php
 require_once dirname(__DIR__) . '/core/bootstrap.php';
 
+$scriptDir = str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'] ?? '/admin/login.php'));
+$coreBase = rtrim(dirname($scriptDir), '/');
+
 // Already logged in?
 if (Auth::check() && Auth::role() === 'admin') {
     header('Location: dashboard.php');
@@ -41,8 +44,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Admin Login — Restrodesk</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/devcore-suite/core/ui/devcore.css">
-    <link rel="stylesheet" href="/devcore-suite/core/ui/parts/_icons.css">
+    <link rel="stylesheet" href="<?= htmlspecialchars($coreBase . '/core/ui/devcore.css', ENT_QUOTES, 'UTF-8') ?>">
+    <link rel="stylesheet" href="<?= htmlspecialchars($coreBase . '/core/ui/parts/_icons.css', ENT_QUOTES, 'UTF-8') ?>">
     <style>
         :root { --dc-accent:#e8a838; --dc-accent-2:#f0c060; --dc-accent-glow:rgba(232,168,56,0.2); }
         body { display:flex; align-items:center; justify-content:center; min-height:100vh; }
@@ -96,6 +99,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </p>
     </div>
 </div>
-<script src="/devcore-suite/core/ui/devcore.js"></script>
+<script src="<?= htmlspecialchars($coreBase . '/core/ui/devcore.js', ENT_QUOTES, 'UTF-8') ?>"></script>
 </body>
 </html>
