@@ -6,6 +6,10 @@ Perfect for modern restaurants, cafes, and food courts looking to streamline ord
 
 Built on the DevCore Shared Library with secure payment handling and kitchen workflow optimization.
 
+## Live Deployment
+
+- Production Website: https://restrodesk.42web.io
+
 **Part of the DevCore Suite** — a collection of business-ready web applications sharing a common core library.
 
 ---
